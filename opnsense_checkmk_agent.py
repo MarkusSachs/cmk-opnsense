@@ -562,7 +562,7 @@ class checkmk_checker(object):
                     except ValueError:
                         pass
 
-            if _interface_dict["flags"] & 0x2 or _interface_dict["flags"] & 0x10 or _interface_dict["flags"] & 0x80: ## nur broadcast oder ptp .. und noarp
+            if "flags" in _interface_dict.keys() and (_interface_dict["flags"] & 0x2 or _interface_dict["flags"] & 0x10 or _interface_dict["flags"] & 0x80): ## nur broadcast oder ptp .. und noarp
                 self._all_interfaces[_interface] = _interface_dict
             else:
                 continue
