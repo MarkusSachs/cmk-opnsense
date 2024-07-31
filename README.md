@@ -13,5 +13,7 @@ Ensure you create a packet filter rule to allow connections from your checkmk se
 
 ## Restart CheckMK Agent
 
+```
 /usr/local/etc/rc.syshook.d/start/99-checkmk_agent --stop
 /usr/local/etc/rc.syshook.d/start/99-checkmk_agent --start
+```
