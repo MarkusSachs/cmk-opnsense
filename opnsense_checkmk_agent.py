@@ -1137,6 +1137,10 @@ class checkmk_checker(object):
         else:
             _json_data = {}
         for _connection in _connections_config:
+            # BUG FIX 1: Deaktivierte Verbindungen überspringen
+            if _connection.get("enabled") == "0":
+                continue
+
             _uuid = _connection.get("@uuid","")
             _name = _connection.get("description")
             if len(_name.strip()) < 1:
@@ -1184,7 +1188,8 @@ class checkmk_checker(object):
                     _ret.append("{status} \"IPsec Tunnel: {remote-name}\" if_in_octets=0|if_out_octets=0|lifetime=0 not running".format(**_con))
             else:
                 _con["status"] = max(_con["status"],1)
-                _con["phase2"] = f"{_children_up}/{_required_phase2}"
+                # BUG FIX 2: _required_phase2 -> _required_children (war NameError)
+                _con["phase2"] = f"{_children_up}/{_required_children}"
                 _ret.append("{status} \"IPsec Tunnel: {remote-name}\" if_in_octets={bytes-received}|if_out_octets={bytes-sent}|lifetime={life-time} {phase2} {state} {local-id} - {remote-id}({remote-host})".format(**_con))
         return _ret
     def checklocal_wireguard(self):
