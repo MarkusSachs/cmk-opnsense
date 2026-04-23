@@ -17,3 +17,11 @@ Ensure you create a packet filter rule to allow connections from your checkmk se
 /usr/local/etc/rc.syshook.d/start/99-checkmk_agent --stop
 /usr/local/etc/rc.syshook.d/start/99-checkmk_agent --start
 ```
+
+## Update CheckMK Agent
+```
+/usr/local/etc/rc.syshook.d/start/99-checkmk_agent --stop
+fetch -o /usr/local/etc/rc.syshook.d/start/99-checkmk_agent https://raw.githubusercontent.com/MarkusSachs/cmk-opnsense/main/opnsense_checkmk_agent.py
+chmod +x /usr/local/etc/rc.syshook.d/start/99-checkmk_agent
+/usr/local/etc/rc.syshook.d/start/99-checkmk_agent
+```
